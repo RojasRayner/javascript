@@ -1,0 +1,13 @@
+/* creacion de clases de width y height responsive para bootstrap. Este loop crea clases .w y .h para bootstrap para poder usar de forma responsive. Por ejemplo se puede utilizar la clase w-md-25. por lo tanto el width sera del 25% en el breakpoint de >= 768px */
+@each $nombre, $porcentaje in $grid-breakpoints {
+    @include media-breakpoint-min($porcentaje) {
+        $infix: breakpoint-key($nombre);
+        @each $prop, $abbrev in $medidas {
+            @each $size, $length in $sizes {
+                .#{$abbrev}#{$infix}-#{$size} { 
+                    #{$prop}: $length !important;
+                }
+            }
+        }
+    }
+}

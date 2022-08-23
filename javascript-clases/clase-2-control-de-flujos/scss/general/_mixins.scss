@@ -1,0 +1,11 @@
+/* mixin que ayuda a crear un breackpoint min-width dependiendo del porcentaje suministrado . */
+@mixin media-breakpoint-min($porcentaje) {
+    $min: $porcentaje;
+    @if $min {
+      @media (min-width: $min) {
+        @content;
+      }
+    } @else {
+      @content;
+    }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "javascript",
+  "version": "1.0.0",
+  "description": "Cursada de javascript",
+  "main": "index.js",
+  "scripts": {
+    "compile:sass": "sass --watch javascript-clases/clase-2-control-de-flujos/scss/style.scss javascript-clases/clase-2-control-de-flujos/css/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RojasRayner/javascript.git"
+  },
+  "keywords": [
+    "javascript",
+    "sass"
+  ],
+  "author": "Rojas Rayner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RojasRayner/javascript/issues"
+  },
+  "homepage": "https://github.com/RojasRayner/javascript#readme"
+}

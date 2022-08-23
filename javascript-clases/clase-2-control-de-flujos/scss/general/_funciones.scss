@@ -1,0 +1,4 @@
+/* funcion para obtener el nombre de la key del map $grid-breackpoints */
+@function breakpoint-key($nombre) {
+    @return if($nombre == null, "", "-#{$nombre}");
+  }

@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+/* variables map para los breackpoints, sizes de los width y height junto con sus nombres de clases */
+$grid-breakpoints: (
+  xs: 200px,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
+$sizes: (
+  25: 25%,
+  50: 50%,
+  75: 75%,
+  100: 100%,
+);
+$medidas:(
+  width: w,
+  height: h,
+);
+$theme-colors: (
+  "primary":    #2E2221,
+  "secondary":  #BD947E,
+  "success":    #EEEAE7,
+  "info":       #6C4333,
+  "warning":    #D6C3B6,
+  "danger":     #7F5841,
+  "light":      #ECD6C4,
+  "dark":       #80685A
+);
+$fontFamily:'Itim', cursive;

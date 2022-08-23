@@ -1,0 +1,238 @@
+@import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* variables map para los breackpoints, sizes de los width y height junto con sus nombres de clases */
+/* funcion para obtener el nombre de la key del map $grid-breackpoints */ /* mixin que ayuda a crear un breackpoint min-width dependiendo del porcentaje suministrado . */ /* creacion de clases de width y height responsive para bootstrap. Este loop crea clases .w y .h para bootstrap para poder usar de forma responsive. Por ejemplo se puede utilizar la clase w-md-25. por lo tanto el width sera del 25% en el breakpoint de >= 768px */
+@media (min-width: 200px) {
+  .w-xs-25 {
+    width: 25% !important;
+  }
+  .w-xs-50 {
+    width: 50% !important;
+  }
+  .w-xs-75 {
+    width: 75% !important;
+  }
+  .w-xs-100 {
+    width: 100% !important;
+  }
+  .h-xs-25 {
+    height: 25% !important;
+  }
+  .h-xs-50 {
+    height: 50% !important;
+  }
+  .h-xs-75 {
+    height: 75% !important;
+  }
+  .h-xs-100 {
+    height: 100% !important;
+  }
+}
+@media (min-width: 576px) {
+  .w-sm-25 {
+    width: 25% !important;
+  }
+  .w-sm-50 {
+    width: 50% !important;
+  }
+  .w-sm-75 {
+    width: 75% !important;
+  }
+  .w-sm-100 {
+    width: 100% !important;
+  }
+  .h-sm-25 {
+    height: 25% !important;
+  }
+  .h-sm-50 {
+    height: 50% !important;
+  }
+  .h-sm-75 {
+    height: 75% !important;
+  }
+  .h-sm-100 {
+    height: 100% !important;
+  }
+}
+@media (min-width: 768px) {
+  .w-md-25 {
+    width: 25% !important;
+  }
+  .w-md-50 {
+    width: 50% !important;
+  }
+  .w-md-75 {
+    width: 75% !important;
+  }
+  .w-md-100 {
+    width: 100% !important;
+  }
+  .h-md-25 {
+    height: 25% !important;
+  }
+  .h-md-50 {
+    height: 50% !important;
+  }
+  .h-md-75 {
+    height: 75% !important;
+  }
+  .h-md-100 {
+    height: 100% !important;
+  }
+}
+@media (min-width: 992px) {
+  .w-lg-25 {
+    width: 25% !important;
+  }
+  .w-lg-50 {
+    width: 50% !important;
+  }
+  .w-lg-75 {
+    width: 75% !important;
+  }
+  .w-lg-100 {
+    width: 100% !important;
+  }
+  .h-lg-25 {
+    height: 25% !important;
+  }
+  .h-lg-50 {
+    height: 50% !important;
+  }
+  .h-lg-75 {
+    height: 75% !important;
+  }
+  .h-lg-100 {
+    height: 100% !important;
+  }
+}
+@media (min-width: 1200px) {
+  .w-xl-25 {
+    width: 25% !important;
+  }
+  .w-xl-50 {
+    width: 50% !important;
+  }
+  .w-xl-75 {
+    width: 75% !important;
+  }
+  .w-xl-100 {
+    width: 100% !important;
+  }
+  .h-xl-25 {
+    height: 25% !important;
+  }
+  .h-xl-50 {
+    height: 50% !important;
+  }
+  .h-xl-75 {
+    height: 75% !important;
+  }
+  .h-xl-100 {
+    height: 100% !important;
+  }
+}
+@media (min-width: 1400px) {
+  .w-xxl-25 {
+    width: 25% !important;
+  }
+  .w-xxl-50 {
+    width: 50% !important;
+  }
+  .w-xxl-75 {
+    width: 75% !important;
+  }
+  .w-xxl-100 {
+    width: 100% !important;
+  }
+  .h-xxl-25 {
+    height: 25% !important;
+  }
+  .h-xxl-50 {
+    height: 50% !important;
+  }
+  .h-xxl-75 {
+    height: 75% !important;
+  }
+  .h-xxl-100 {
+    height: 100% !important;
+  }
+}
+.formLogin {
+  width: 80vw;
+  height: 80vh;
+  border-radius: 15px;
+}
+
+.card {
+  -webkit-box-shadow: -4px 7px 10px 9px rgba(17, 17, 26, 0.51);
+  box-shadow: -4px 7px 10px 9px rgba(17, 17, 26, 0.51);
+  width: 70vw;
+}
+
+.cardImagen {
+  width: 35vw;
+}
+
+@media (min-width: 200px) {
+  .cardImagen {
+    width: 60vw;
+  }
+}
+@media (min-width: 576px) {
+  .cardImagen {
+    width: 42vw;
+  }
+}
+@media (min-width: 620px) {
+  .cardImagen {
+    width: 36vw;
+  }
+}
+@media (min-width: 768px) {
+  .cardImagen {
+    width: 30vw;
+  }
+}
+#btnLogin.btn {
+  font-family: "Itim", cursive;
+  background-color: #2E2221;
+  border-color: #2E2221;
+  cursor: pointer;
+  color: aliceblue;
+}
+#btnLogin.btn:hover {
+  background-color: #6C4333;
+  border-color: #6C4333;
+}
+#btnLogin.btn:active:focus {
+  border-color: #BD947E;
+  background-color: #BD947E;
+}
+
+h1.tituloLogin {
+  font-family: "Itim", cursive;
+  font-size: larger;
+}
+
+h5.subtituloLogin {
+  font-family: "Itim", cursive;
+  font-size: medium;
+}
+
+a.registroLogin {
+  font-family: "Itim", cursive;
+}
+
+.redesInstagram svg {
+  color: #2E2221;
+  width: 25px;
+  height: 25px;
+}
+
+/*# sourceMappingURL=style.css.map */
