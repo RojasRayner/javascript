@@ -1,7 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Mali:wght@700&display=swap");
 body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
+  background-color: #233643; }
 
-/*# sourceMappingURL=style.css.map */
+/* SCSS HEX */
+/* SCSS Gradient */
+/* mixin para size de la imagen */
+/* mixin para color y font famili */
+.colorTitulo {
+  color: #c99383ff;
+  font-family: "Mali", cursive; }
