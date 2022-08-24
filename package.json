@@ -4,7 +4,7 @@
   "description": "Cursada de javascript",
   "main": "index.js",
   "scripts": {
-    "compile:sass": "sass --watch javascript-clases/clase-2-control-de-flujos/scss/style.scss javascript-clases/clase-2-control-de-flujos/css/style.css"
+    "compile:sass": "node-sass --watch sass/main.sass css/style.css"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/RojasRayner/javascript/issues"
   },
-  "homepage": "https://github.com/RojasRayner/javascript#readme"
+  "homepage": "https://github.com/RojasRayner/javascript#readme",
+  "dependencies": {
+    "node-sass": "^7.0.1"
+  }
 }
