@@ -51,7 +51,7 @@ while ((nombre !== "ESC") && (intentos > 0) && (nombre !== "esc")) {
     //se resta un intento
     intentos--;
     //se pide datos al usuario nuevamente
-    nombre = prompt (`\t Tienes ${intentos} intentos \n\tIngrese su nombre \n\t No usar las siguientes Caracteres Restringidos\n @ / * - | " \\ _ `);
+    nombre = prompt (`\t Tienes ${intentos} intentos \n\tIngrese su nombre \n\t No usar las siguientes Caracteres Restringidos\n @ / * - | " \\ _ \n\t ESC o esc para salir.`);
     if(intentos == 1){
         alert(`Lo Sentimos!. No tienes más intentos`)
         break;
