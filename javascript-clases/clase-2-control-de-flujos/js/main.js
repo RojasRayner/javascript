@@ -7,7 +7,7 @@
 //variable string que se usa como guia para comparar
 let palabra = (`@/*-|"\\_`);
 //numeros de intentos
-let intentos = 3;
+let intentos = 4;
 //se pide datos al usuario y se les espesifica las validaciones
 let nombre = prompt (`\t Tienes ${intentos} intentos \n\t Ingrese su nombre \n\t No usar las siguientes Caracteres Restringidos\n @ / * - | " \\ _ `);
 //mientras el valor no sea escape y tenga cantidad de intentos, ejecutar.
@@ -52,7 +52,7 @@ while ((nombre !== "ESC") && (intentos > 1)) {
     intentos--;
     //se pide datos al usuario nuevamente
     nombre = prompt (`\t Tienes ${intentos} intentos \n\tIngrese su nombre \n\t No usar las siguientes Caracteres Restringidos\n @ / * - | " \\ _ `);
-    if(intentos == 0){
+    if(intentos == 1){
         alert(`Lo Sentimos!. No tienes más intentos`)
         break;
     }else{
