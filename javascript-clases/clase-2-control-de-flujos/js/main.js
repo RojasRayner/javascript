@@ -7,11 +7,11 @@
 //variable string que se usa como guia para comparar
 let palabra = (`@/*-|"\\_`);
 //numeros de intentos
-let intentos = 4;
+let intentos = 3;
 //se pide datos al usuario y se les espesifica las validaciones
 let nombre = prompt (`\t Tienes ${intentos} intentos \n\t Ingrese su nombre \n\t No usar las siguientes Caracteres Restringidos\n @ / * - | " \\ _ `);
 //mientras el valor no sea escape y tenga cantidad de intentos, ejecutar.
-while ((nombre !== "ESC") && (intentos > 1)) {
+while ((nombre !== "ESC") && (intentos > 0)) {
     //variable que se usa para guardar la string que se va a generar de las letras en el nombre
     let restringida = "";
     //variable que se usa para guardar los numeros ingresados por el usuario
