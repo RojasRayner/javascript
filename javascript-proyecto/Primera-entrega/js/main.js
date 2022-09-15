@@ -207,7 +207,7 @@ function servicioCliente(nombreUsuario,telUsuario,passUsuario) {
 //FUNCION QUE MUESTRA DE HORA PARA EL SERVICIO
 function disponible(hora,fecha,horaTrata,nombreUsuario,telUsuario,passUsuario,servicioUsuario,horaDeTrabajo,fechaServicio,passUsuario){
     if((typeof horaDeTrabajo !== 'undefined') && (horaDeTrabajo.length !== 0)){
-        let horaTrabajo = horaDeTrabajo.find(trabajo => trabajo.hora !== hora )
+        let horaTrabajo = horaDeTrabajo.find(trabajo => trabajo.hora == hora )
         let fechaTrabajo = fechaServicio.find(elementUno => elementUno.telefono == telUsuario);
         if((fechaTrabajo.hora !== horaTrabajo.hora) && (fechaTrabajo.fecha !== horaTrabajo.fecha) && (fechaTrabajo.horaTrata !== horaTrabajo.horaTrata) &&(fechaTrabajo.password !== horaTrabajo.password)){
             horaTrabajo.hora = hora;
@@ -225,14 +225,14 @@ function disponible(hora,fecha,horaTrata,nombreUsuario,telUsuario,passUsuario,se
             menuCliente(nombreUsuario,passUsuario,telUsuario,carritoCompra);
         }
     }else{
-        horaTrabajo.hora = hora;
-            horaTrabajo.fecha = fecha;
-            horaTrabajo.horaTrata = horaTrata;
-            horaTrabajo.cliente = nombreUsuario;
-            horaTrabajo.telefono = telUsuario;
-            horaTrabajo.password = passUsuario;
-            horaTrabajo.tituloServicio = servicioUsuario;
-            horaDeTrabajo.push(horaTrabajo);
+            horaDeTrabajo.hora = hora;
+            horaDeTrabajo.fecha = fecha;
+            horaDeTrabajo.horaTrata = horaTrata;
+            horaDeTrabajo.cliente = nombreUsuario;
+            horaDeTrabajo.telefono = telUsuario;
+            horaDeTrabajo.password = passUsuario;
+            horaDeTrabajo.tituloServicio = servicioUsuario;
+            horaDeTrabajo.push(horaDeTrabajo);
             console.log("horaTrabajo" + horaDeTrabajo);
             alert("SERVICIO AGENDADO");
     }
