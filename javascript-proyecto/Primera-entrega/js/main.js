@@ -159,7 +159,7 @@ function menuCliente(nombreUsuario,passUsuario,telUsuario,carritoCompra) {
         case 3:
             carritoCliente(nombreUsuario,passUsuario,telUsuario,carritoCompra);
         case 4:
-            configuracionCliente(nombreUsuario,passUsuario,telUsuario);
+            nuevoCliente(nombreUsuario,passUsuario,telUsuario);
         case 5: 
             bienvenida();
         default:
