@@ -29,32 +29,11 @@
                 </div>
             </div>
         </template>
-        <template id="paginaAdministrador">
-			<div class="wrapper">
-				<div class="inner">
-					<form action="">
-                        <div class="d-flex justify-content-center align-items-center form-wrapper flex-column">
-                            <h2>MENU DE ADMINISTRADOR</h2>
-							<h1 class="usuario">USUARIO</h1>
-							<h3 class="infoMenu">INFORMACION PARA EL MENU</h3>
-						</div>
-						<div class="form-wrapper">
-							<ul class="menuAdministrador"></ul>
-						</div>
-                        <div class="botonera">
-                            <button type="submit" class="btn btn-primary agregar mb-2 btn-lg">AGREGAR ADMINISTRADOR</button>
-                            <button type="submit" class="btn btn-primary eliminar mb-2 btn-lg">ELIMINAR</button>
-                            <button type="submit" class="btn btn-primary salir mb-2 btn-lg">SALIR</button>
-                        </div>
-					</form>
-				</div>
-			</div>
-		</template>
         <template id="paginaRegistro">
                 <div class="wrapper">
                     <div class="inner">
                         <form action="" class="registroNuevoUsuario">
-                            <h3>FORMULARIO DE REGISTRO NUEVO ADMINISTRADOR</h3>
+                            <h3>FORMULARIO DE REGISTRO</h3>
                             <div class="form-group">
                                 <div class="form-wrapper">
                                     <label for="nombreUsuario">Nombre de Usuario</label>
@@ -62,48 +41,29 @@
                                 </div>
                             </div>
                             <div class="form-wrapper">
+                                <label for="telUsuario">Telefono</label>
+                                <input type="tel" class="form-control telUsuario" required
+                                pattern="[0-9]{3}[0-9]{3}[0-9]{3}">
+                            </div>
+                            <div class="form-wrapper">
                                 <label for="passUsuario">Password</label>
                                 <input type="password" class="form-control passUsuario password" required>
                             </div>
-                            <button class="btn btn-primary entrarRegistrar mb-2 btn-lg" type="submit">Registrar</button>
-                            <button type="submit" class="btn btn-primary salir mb-2 btn-lg">SALIR</button>
+                            <div class="form-wrapper">
+                                <label for="passUsuarioDos">Confirma Password</label>
+                                <input type="password" class="form-control passUsuarioDos password" required>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"> I caccept the Terms of Use & Privacy Policy.
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <button class="btn btn-primary entrar mb-2 btn-lg" type="submit">Registrar</button>
                         </form>
                     </div>
                 </div>
         </template>
-        <template id="salida">
-            <div class="wrapper">
-                <div class="inner">
-                    <form action="">
-                        <div class="form-group">
-                            <h2></h2>
-                            <h1></h1>
-                            <h3></h3>
-                        </div>
-                        <button class="btn btn-primary entrarRegistrar mb-2 btn-lg" type="submit">Registrar</button>
-                    </form>
-                </div>
-            </div>
-    </template>
-        <template id="eliminarUsuario">
-            <div class="wrapper">
-                <div class="inner">
-                    <form action="" class="registroNuevoUsuario">
-                        <h3>ELIMINAR ADMINISTRADOR</h3>
-                        <div class="form-group">
-                            <div class="form-wrapper">
-                                <label for="nombreUsuario">Nombre de Usuario</label>
-                                <input type="text" class="form-control nombreUsuario" disabled>
-                                <label for="passUsuario">Password</label>
-                                <input type="text" class="form-control passUsuario password" disabled>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary eliminarUsuario mb-2 btn-lg" type="submit">ELIMINAR</button>
-                        <button class="btn btn-primary salir mb-2 btn-lg" type="submit">SALIR</button>
-                    </form>
-                </div>
-            </div>
-    </template>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     <script src="./js/main.js"></script>
