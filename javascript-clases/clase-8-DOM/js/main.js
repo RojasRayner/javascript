@@ -177,8 +177,11 @@ function nuevoAdministrador(usuarios){
     
     let entrarRegistrar = templateRegistroUsuario.querySelector(".entrarRegistrar");
     entrarRegistrar.addEventListener("click", () =>{
-        usuarios.push({administrador:nuevoAdmin,password:nuevaPass});
-
+        nuevoArray.administrador = nuevoAdmin;
+        nuevoArray.password = nuevaPass;
+        usuarios.push(nuevoArray);
+        delete nuevoArray;
+        nuevoArray=[];
         alert("SE GUARDO NUEVO ADMINISTRADOR"+ `TIENES ${usuarios.length} ADMINISTRADORES`);
         templateRegistroUsuario.remove();
         paginaRegistroUsuario.remove();
