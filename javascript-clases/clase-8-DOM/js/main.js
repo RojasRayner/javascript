@@ -44,7 +44,7 @@ function cliente() {
 	const nombre = prompt("Ingrese su nombre: ");
 	const pass = prompt("Ingrse su contraseña");
 	for (const persona of usuarios) {
-		if (nombre === persona.administrador && pass === persona.password) {
+		if ((nombre == persona.administrador) && (pass == persona.password)) {
 
 			inputTextNomUsuario.value = nombre;
 			inputTextPassUsuario.value = pass;
@@ -147,14 +147,17 @@ function eliminarAdministrador(usuarios,cantUsuarioEliminar,nombre){
             paginaEliminarUsuario.remove();
 
             main.appendChild(templateAdministrador);
-            administradores(nombre,pass);
+            administradores(nombre,usuarios);
 
         });
 
         let siguienteUsuario = templateEliminarUsuario.querySelector(".siguienteUsuario");
-        siguienteUsuario.addEventListener("click", (cantUsuarioEliminar) =>{
-            cantUsuarioEliminar++;
-            eliminarAdministrador(usuarios,cantUsuarioEliminar,nombre);
+        siguienteUsuario.addEventListener("click", () =>{
+            templateEliminarUsuario.remove();
+            paginaEliminarUsuario.remove();
+                
+            main.appendChild(templateAdministrador);
+            administradores(nombre,usuarios);
         });
         
     });
@@ -181,7 +184,7 @@ function nuevoAdministrador(usuarios){
         paginaRegistroUsuario.remove();
         
         main.appendChild(templateAdministrador);
-        administradores(nombre,pass);
+        administradores(nombre,usuarios);
     });
 
     let siguienteUsuario = templateRegistroUsuario.querySelector(".salir");
@@ -191,7 +194,7 @@ function nuevoAdministrador(usuarios){
         paginaRegistroUsuario.remove();
         
         main.appendChild(templateAdministrador);
-        administradores(nombre,pass);
+        administradores(nombre,usuarios);
 
     });
 }
