@@ -9,8 +9,6 @@ CAPTURAR UNA O MAS ENTRADAS POR PROMPT() Y MOSTRARLAS EN EL HTML MODIFICANDO EL 
 //UTILIZAR ALGUNOS METODOS O PROPIEDADES VISTO EN CLASES
 
 const usuarios = [{ administrador: "admin", password: "admin" }];
-let valor = 0;
-let cantUsuarioEliminar = 1;
 let cantidad = usuarios.length;
 let main = document.querySelector("main");
 
