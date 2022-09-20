@@ -104,7 +104,7 @@ function administradores(nombre,usuarios) {
         paginaAdministrador.remove();
                 
         main.appendChild(templateRegistroUsuario);
-        nuevoAdministrador(usuarios);
+        nuevoAdministrador(usuarios,nombre);
     });
 
     eliminar.addEventListener("click", () =>{
@@ -165,7 +165,7 @@ function eliminarAdministrador(usuarios,nombre){
     });
 }
 //agrega nuevo ADMINISTRADOR
-function nuevoAdministrador(usuarios){
+function nuevoAdministrador(usuarios,nombre){
 
     nuevoAdmin = prompt("caracter no permitido: @\nIngrese NUEVO ADMINISTRADOR: ");
     nuevaPass = prompt("Ingrese NUEVA CONTRASEÑA");
