@@ -38,6 +38,10 @@ let templateRegistroUsuario = paginaRegistroUsuario.content.querySelector(".wrap
 
 let paginaSalida = document.querySelector("#salida");
 let templateSalida = paginaSalida.content.querySelector(".wrapper");
+let agregar = templateAdministrador.querySelector(".agregar");
+
+let eliminar = templateAdministrador.querySelector(".eliminar");
+let salir = templateAdministrador.querySelector(".salir");
 
 //recorre los objetos dentro del array si encuntra un objeto con nombre y password validos inicia como administrador de lo contrario retorna a inicio
 function cliente() {
@@ -58,7 +62,7 @@ function cliente() {
                 paginaIndex.remove();
                 
                 main.appendChild(templateAdministrador);
-                administradores(nombre,pass);
+                administradores(nombre,usuarios);
             });
 
 		} else {
@@ -75,7 +79,7 @@ function cliente() {
 	}
 }
 //menu de administrador
-function administradores(nombre,pass) {
+function administradores(nombre,usuarios) {
 
     let headingDos = (templateAdministrador.querySelector("h2").textContent = `${nombre.toUpperCase()}`);
 	headingDos = templateAdministrador.querySelector("h2").style.color = "red";
@@ -96,7 +100,7 @@ function administradores(nombre,pass) {
     botonera.classList.add("justify-content-center");
     botonera.classList.add("align-items-center");
 
-    let agregar = templateAdministrador.querySelector(".agregar");
+
     agregar.addEventListener("click", () =>{
         templateAdministrador.remove();
         paginaAdministrador.remove();
@@ -105,26 +109,25 @@ function administradores(nombre,pass) {
         nuevoAdministrador(usuarios);
     });
 
-    let eliminar = templateAdministrador.querySelector(".eliminar");
     eliminar.addEventListener("click", () =>{
         templateAdministrador.remove();
         paginaAdministrador.remove();
                 
         main.appendChild(templateEliminarUsuario);
-        eliminarAdministrador(usuarios,cantUsuarioEliminar,nombre)
+        eliminarAdministrador(usuarios,nombre)
     });
 
-    let salir = templateAdministrador.querySelector(".salir");
+
     salir.addEventListener("click", () =>{
         templateAdministrador.remove();
         paginaAdministrador.remove();
                 
         main.appendChild(templateSalida);
-        salida();
+		salida();
     });
 }
 //Eliminar Administrador
-function eliminarAdministrador(usuarios,cantUsuarioEliminar,nombre){
+function eliminarAdministrador(usuarios,nombre){
     usuarios.forEach(element => {
         let templateEliminarUsuarioClonada = templateEliminarUsuario.cloneNode(true);
         main.appendChild(templateEliminarUsuarioClonada);
@@ -138,6 +141,7 @@ function eliminarAdministrador(usuarios,cantUsuarioEliminar,nombre){
 		inputEliminarPassUsuario.value = element.password;
         
         let eliminarUsuario = templateEliminarUsuario.querySelector(".eliminarUsuario");
+        let index = usuarios.indexOf(element);
         eliminarUsuario.addEventListener("click", () =>{
             usuarios.splice(index,1);
             alert("SE ELIMINO USUARIO");
@@ -151,7 +155,7 @@ function eliminarAdministrador(usuarios,cantUsuarioEliminar,nombre){
 
         });
 
-        let siguienteUsuario = templateEliminarUsuario.querySelector(".siguienteUsuario");
+        let siguienteUsuario = templateEliminarUsuario.querySelector(".salir");
         siguienteUsuario.addEventListener("click", () =>{
             templateEliminarUsuario.remove();
             paginaEliminarUsuario.remove();
@@ -177,11 +181,9 @@ function nuevoAdministrador(usuarios){
     
     let entrarRegistrar = templateRegistroUsuario.querySelector(".entrarRegistrar");
     entrarRegistrar.addEventListener("click", () =>{
-        nuevoArray.administrador = nuevoAdmin;
-        nuevoArray.password = nuevaPass;
-        usuarios.push(nuevoArray);
-        delete nuevoArray;
-        nuevoArray=[];
+
+        usuarios.push({ administrador: nuevoAdmin, password: nuevaPass});
+
         alert("SE GUARDO NUEVO ADMINISTRADOR"+ `TIENES ${usuarios.length} ADMINISTRADORES`);
         templateRegistroUsuario.remove();
         paginaRegistroUsuario.remove();
