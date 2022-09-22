@@ -33,6 +33,17 @@ function FechaServicios(fecha,hora,servicioUsuario,horaTrata,nombreUsuario,telUs
 const carritoCompra = [];
 
 let main = document.querySelector("main");
+
+let paginaCliente = document.querySelector("#paginaCliente");
+let templateCliente = paginaCliente.content.querySelector(".wrapper");
+let innerCliente = templateCliente.querySelector(".inner")
+
+let inputTextNomUsuario = templateCliente.querySelector(".nombreUsuario");
+inputTextNomUsuario.setAttribute("required", true);
+
+let inputTextPassUsuario = templateCliente.querySelector(".passUsuario");
+inputTextPassUsuario.setAttribute("required", true);
+
 let header = document.querySelector("header");
 let imgCarrito = header.querySelector("i");
 imgCarrito.addEventListener("click",verCarrito);
@@ -147,4 +158,8 @@ function agregarProductos(e){
 function agregarServicios(e){
     let agendaCliente = servicios.find( serv => serv.id == e.target.id);
     agendaServicios.push(agendaCliente);
+    templateIndex.remove();
+    main.appendChild(templateCliente);
+    innerCliente.setAttribute("min-width","850px");
+    innerCliente.setAttribute("max-width","none");
 }
