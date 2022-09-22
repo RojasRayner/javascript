@@ -54,11 +54,8 @@ function verCarrito(e){
     main.appendChild(templateCarrito);
     let cardCarritoInnerIndex = carritoInner.querySelector(".cardCarrito");
     cardCarritoInnerIndex.remove();
-    
+    let totalCompra = 0;
     if(carritoCompra.length !== 0){
-        let totalCompra = 0;
-        let spanCarritoInnerIndex = carritoInner.querySelector("span");
-        spanCarritoInnerIndex.textContent = `TOTAL DE COMPRA: ${totalCompra}`;
         carritoCompra.forEach(element => {
             let cardCarritoInnerIndexClonada = cardCarritoInnerIndex.cloneNode(true);
             let imgCardCarritoInnerIndexClonada = cardCarritoInnerIndexClonada.querySelector("img");
@@ -76,6 +73,9 @@ function verCarrito(e){
             buttonCardCarritoInnerIndexClonada.setAttribute("id",`${element.id}`);
             carritoInner.appendChild(cardCarritoInnerIndexClonada);
         });
+        let spanCarritoInnerIndex = carritoInner.querySelector("span");
+        spanCarritoInnerIndex.textContent = `TOTAL DE COMPRA: ${totalCompra}`;
+
     }else{
         templateCarrito.appendChild(agregar);
         templateCarrito.appendChild(regreso);
