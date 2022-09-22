@@ -37,23 +37,25 @@ let header = document.querySelector("header");
 let imgCarrito = header.querySelector("i");
 imgCarrito.addEventListener("click",verCarrito);
 
+let agregar = document.createElement("h2");
+let regreso = document.createElement("button");
+regreso.innerHTML = "<button class=btn btn-primary entrar mb-1 btn-lg type=button>REGRESAR</button>";
+agregar.innerHTML = "<h2>NO TIENES PRODUCTOS NI SERVICIOS EN TU CARRITO</h2>";
+
 let paginaCarrito = document.querySelector("#paginaCarrito");
 let templateCarrito = paginaCarrito.content.querySelector(".wrapper");
 let carritoInner = templateCarrito.querySelector(".carrito");
 carritoInner.style.background = "none";
 
 function verCarrito(e){
-    
+    agregar.remove();
+    regreso.remove();
     templateIndex.remove();
     main.appendChild(templateCarrito);
     let cardCarritoInnerIndex = carritoInner.querySelector(".cardCarrito");
     cardCarritoInnerIndex.remove();
     
-    if((carritoCompra.length == 0) && (agendaServicios.length == 0)){
-        let agregar = document.createElement("h2");
-        agregar.innerHTML = "<h2>NO TIENES PRODUCTOS NI SERVICIOS EN TU CARRITO</h2>";
-        templateCarrito.appendChild(agregar);
-    }else{
+    if(carritoCompra.length !== 0){
         let totalCompra = 0;
         let spanCarritoInnerIndex = carritoInner.querySelector("span");
         spanCarritoInnerIndex.textContent = `TOTAL DE COMPRA: ${totalCompra}`;
@@ -74,18 +76,27 @@ function verCarrito(e){
             buttonCardCarritoInnerIndexClonada.setAttribute("id",`${element.id}`);
             carritoInner.appendChild(cardCarritoInnerIndexClonada);
         });
-        
+    }else{
+        templateCarrito.appendChild(agregar);
+        templateCarrito.appendChild(regreso);
+        regreso.addEventListener("click",regresoIndex(regreso,agregar,carritoCompra));
     }
+}
+//FUNCION DE REGRESO AL INDEX
+function regresoIndex(regreso,agregar,carritoCompra){
+    regreso.remove();
+    agregar.remove();
+    carritoCompra = [];
+    location.reload(true);
 }
 //funcion que elimina productos del carrito de compra
 function eliminarProducto(e){
     let eliminarProducto = carritoCompra.indexOf(e.target.id);
     carritoCompra.splice(eliminarProducto,1);
+    let productoClick = e.target;
+    productoClick.parentElement.remove();
     verCarrito();
 }
-
-
-
 
 let paginaIndex = document.querySelector("#paginaIndex");
 let templateIndex = paginaIndex.content.querySelector(".wrapper");
