@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/cliente.css">
+</head>
+<body>
+    <main>
+        <template id="paginaIndex">
+            <div class="wrapper">    
+                <div class="inner">
+                    <div class="container-fluid d-flex justify-content-center align-items-center flex-nowrap flex-column h-75 interlineado">
+                        <h2 class="pb-5 ">BIENVENIDO</h2>
+                        <h1 class="pb-5 ">CENTRO ESTETICO</h1>
+                        <h3 class="pb-5 ">MIA BONITA</h3>
+                        <h4></h4>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-wrapper d-flex justify-content-center align-items-center flex-nowrap flex-column ">
+                            <form class="entrada">
+                                <input type="text" class="form-control mb-2 btn-lg nombreUsuario" placeholder="Usuario" aria-label="nombre usuario" required>
+                                <input type="password" class="form-control mb-2 btn-lg passUsuario" placeholder="Contraseña" aria-label="password usuario" required>
+                                <button class="btn btn-primary entrar mb-2 btn-lg" type="submit">ENTRAR</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template id="paginaAdministrador">
+			<div class="wrapper">
+				<div class="inner">
+					<form action="">
+                        <div class="d-flex justify-content-center align-items-center form-wrapper flex-column">
+                            <h2><p>ADMINISTRADOR</p></h2>
+							<h1 class="usuario">CENTRO ESTETICO</h1>
+							<h3 class="infoMenu">MIA BONITA</h3>
+						</div>
+						<div class="form-wrapper">
+							<ul class="menuAdministrador"></ul>
+						</div>
+                        <div class="botonera">
+                            <button type="button" class="btn btn-primary agregar mb-1 btn-lg">AGREGAR ADMINISTRADOR</button>
+                            <button type="button" class="btn btn-primary eliminar mb-1 btn-lg">ELIMINAR</button>
+                            <button type="button" class="btn btn-primary salir mb-1 btn-lg">SALIR</button>
+                        </div>
+					</form>
+				</div>
+			</div>
+		</template>
+        <template id="paginaRegistro">
+                <div class="wrapper">
+                    <div class="inner">
+                        <form class="registroNuevoUsuario" autocomplete="nope">
+                            <h3>FORMULARIO DE REGISTRO NUEVO ADMINISTRADOR</h3>
+                            <div class="form-group">
+                                <div class="form-wrapper">
+                                    <label for="nombreUsuario">Nombre de Usuario</label>
+                                    <input type="text" class="form-control" name="nombreUsuario" required>
+                                </div>
+                            </div>
+                            <div class="form-wrapper">
+                                <label for="passUsuario">Password</label>
+                                <input type="password" class="form-control password" name="passUsuario" required>
+                            </div>
+                            <button class="btn btn-primary entrarRegistrar mb-2 btn-lg" type="submit">Registrar</button>
+                            <button type="button" class="btn btn-primary salir mb-2 btn-lg">SALIR</button>
+                        </form>
+                    </div>
+                </div>
+        </template>
+        <template id="salida">
+            <div class="wrapper">
+                <div class="inner">
+                    <form action="">
+                        <div class="form-group">
+                            <h2></h2>
+                            <h1></h1>
+                            <h3></h3>
+                        </div>
+                        <button class="btn btn-primary entrarRegistrar mb-2 btn-lg" type="submit">Registrar</button>
+                    </form>
+                </div>
+            </div>
+    </template>
+        <template id="eliminarUsuario">
+            <div class="wrapper">
+                <div class="inner">
+                    <h3>ELIMINAR ADMINISTRADOR</h3>
+                    <h2></h2>
+                    <table class="table table-bordered table-dark table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Administrador</th>
+                                <th scope="col">Password</th>
+                                <th scope="col">Opcion</th>
+                            </tr>
+                        </thead>
+                        <tbody class="elementoAdministrador">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    </template>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <script src="../js/cliente.js"></script>
+</body>
+</html>
