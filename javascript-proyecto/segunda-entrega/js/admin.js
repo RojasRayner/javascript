@@ -10,7 +10,6 @@ OBJETIVOS ESPESIFICOS: ALMACENAR DATOS EN EL STORAGE Y RECUPERARLOS */
 
 //VARIABLES
 const administradores = [{ administrador: "admin", password: "admin" }];
-
 let main = document.querySelector("main");
 //CAPTURA DEL TEMPLATE INDEX DEL SIMULADOR Y SU CONTENIDO
 let paginaIndex = document.querySelector("#paginaIndex");

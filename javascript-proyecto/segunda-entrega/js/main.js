@@ -19,8 +19,9 @@ const administradores = [{superUsuario:"admin",password:"admin"}];
 const clientes = [];
 const servicios = [{titulo:"Limieza Facial",des:"Procedimiento que elimina todas las impurezas que se encuentran en la piel generadas por el mismo cuerpo y por el ambiente.",precio:300,horaTrata:1,img:"./images/productos/limpiezaFacial.png",id:1},{titulo:"Maniqura",des:" Tratamiento de belleza cosmético para las uñas y manos",precio:600,horaTrata:2,img:"./images/productos/maniqura.png",id:2},{titulo:"Pediqura",des:"Tratamiento de belleza cosmético para las uñas y pies.",precio:600,horaTrata:2,img:"./images/productos/pediqura.png",id:3}];
 const productos =[{titulo:"AGUA MICELAR",id:1,precio:300,tipoDePiel:"NORMAL",cant:10,img:"./images/productos/aguaMicelar.png"},{titulo:"JABON FACIAL",id:2,precio:120,tipoDePiel:"NORMAL",cant:10,img:"./images/productos/jabonFacial.png"},{titulo:"ESPUMA DESMAQUILLANTE",id:3,precio:450,tipoDePiel:"MIXTA",cant:10,img:"./images/productos/espumaDesmaquillante.png"},{titulo:"TONICO HIDRATANTE",id:4,precio:210,tipoDePiel:"SECA",cant:10,img:"./images/productos/tonicoHidratante.png"},{titulo:"TONICO REVITALIZANTE",id:5,precio:210,tipoDePiel:"GRASA",cant:10,img:"./images/productos/tonicoRevitalizante.png"}];
-const horaDeTrabajo = [];
-const agendaServicios = [];
+//subida al localStorage de servicios y productos
+
+
 function FechaServicios(fecha,hora,servicioUsuario,horaTrata,nombreUsuario,telUsuario,passUsuario){
     this.cliente = nombreUsuario;
     this.telefono = telUsuario;
@@ -144,22 +145,10 @@ servicios.forEach(element => {
     imgCardServiciosInnerClonada.setAttribute("src",`${element.img}`);
     parrfCardServiciosInnerClonada.textContent = `${element.titulo}\n\nDESCRIPCION: ${element.des}\nHORA DE TRATAMIENTO: ${element.horaTrata} HORAS`;
     serviciosInner.appendChild(cardServiciosInnerIndexClonada);
-    let servicioId = element.id;
-    let botonAgendar = cardServiciosInnerIndexClonada.querySelector("button");
-    botonAgendar.setAttribute("id",`${servicioId}`);
-    botonAgendar.addEventListener("click",agregarServicios);
 });
 //funcion que agrega al carrito los productos que quiere comprar
 function agregarProductos(e){
     let posibleCompra = productos.find(prod => prod.id == e.target.id);
     carritoCompra.push(posibleCompra);
 }
-//funcion que agrega a la agenda los servicios que quiere agendar
-function agregarServicios(e){
-    let agendaCliente = servicios.find( serv => serv.id == e.target.id);
-    agendaServicios.push(agendaCliente);
-    templateIndex.remove();
-    main.appendChild(templateCliente);
-    innerCliente.setAttribute("min-width","850px");
-    innerCliente.setAttribute("max-width","none");
-}
+

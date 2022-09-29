@@ -72,6 +72,23 @@ a:hover {
 	color: #333;
 	letter-spacing: 2px;
 }
+.card{
+	width: 180px;
+	border-color: #f11a09;
+	border-style: solid;
+}
+.card img{
+	width: 90px;
+}
+.cardCarrito{
+	width: 800px;
+	border-color: transparent;
+	border-style: none;
+}
+.lineaTotal{
+	width: 100%;
+	height: 20px;
+}
 
 form {
 	width: 50%;
