@@ -6,6 +6,7 @@ localStorage.setItem("servicios", serviciosJson);
 const horaDeTrabajo = [];
 const agendaServicios = [];
 //COMIENZO DEL SCRIPT QUE PERMITE A LOS CLIENTES AGENDAR SERVICIOS
+//SE CAPTURA EL ELEMENTO MAIN DEL HTML SERA EL NODO PADRE
 let main = document.querySelector("main");
 //CAPTURA DEL TEMPLATE INDEX DEL SIMULADOR Y SU CONTENIDO
 let paginaIndex = document.querySelector("#paginaIndex");
@@ -14,23 +15,38 @@ main.appendChild(templateIndex);
 let formularioUsuario = templateIndex.querySelector(".entrada");
 formularioUsuario.addEventListener("submit", cliente);
 //CAPTURA DEL TEMPLATE DEL MENU DE USUARIO Y SUS BOTONES
-let paginaAdministrador = document.querySelector("#paginaAdministrador");
-let templateAdministrador = paginaAdministrador.content.querySelector(".wrapper");
-let agregar = templateAdministrador.querySelector(".agregar");
-let eliminar = templateAdministrador.querySelector(".eliminar");
-let salir = templateAdministrador.querySelector(".salir");
+let paginaAdministradorServicios = document.querySelector("#paginaAdministradorServicios");
+let templateAdministradorServicios = paginaAdministradorServicios.content.querySelector(".wrapper");
+let agregar = templateAdministradorServicios.querySelector(".agregar");
+let eliminar = templateAdministradorServicios.querySelector(".eliminar");
+let salir = templateAdministradorServicios.querySelector(".salir");
 //CAPTURA DEL TEMPLATE DE REGISTRO NUEVO USUARIO Y SU CONTENIDO
-let paginaRegistroAdministrador = document.querySelector("#paginaRegistro");
-let templateRegistroAdministrador = paginaRegistroAdministrador.content.querySelector(".wrapper");
+let paginaRegistroUsuario = document.querySelector("#paginaRegistro");
+let templateRegistroUsuario = paginaRegistroUsuario.content.querySelector(".wrapperRegistro");
 //CAPTURA DEL TEMPLATE QUE MUESTRA LOS SERVICIOS DISPONIBLES DEL SIMULADOR Y SU CONTENIDO
 let paginaServicios = document.querySelector("#paginaServicios");
 let templateServicios = paginaServicios.content.querySelector(".wrapper");
-//CAPTURA DE LOS ELEMENTOS Y CARD PARA MOSTRAR LOS SERVICIOS
+//CAPTURA DE LOS ELEMENTOS Y CARD PARA MOSTRAR LOS SERVICIOS SE ELIMINA EL NODO MOLDE
 let serviciosInner = templateServicios.querySelector(".servicios");
 serviciosInner.style.background = "none";
 let cardServiciosInnerIndex = serviciosInner.querySelector(".cardServicios");
 cardServiciosInnerIndex.remove();
-
+//CAPTURA DE ICONO QUE MUESTRA UN EVENTO QUE LLEVA CARRITO DE COMPRA
+let header = document.querySelector("header");
+let imgCarrito = header.querySelector("i");
+imgCarrito.addEventListener("click",verCarrito);
+//CAPTURA DE LOS ELEMENTOS Y CARD DE LA AGENDA ASIGNADA POR USUARIO
+let paginaCarrito = document.querySelector("#paginaCarrito");
+let templateCarrito = paginaCarrito.content.querySelector(".wrapper");
+let carritoInner = templateCarrito.querySelector(".carrito");
+let cardCarritoInnerIndex = carritoInner.querySelector(".cardCarrito");
+cardCarritoInnerIndex.remove();
+carritoInner.style.background = "none";
+//ELEMENTOS QUE SE MUESTRAN SI EL CARRITO ESTA VACIO
+let agregarH2 = document.createElement("h2");
+let regresoBtn = document.createElement("button");
+regresoBtn.innerHTML = "<button class=btn btn-primary mb-1 btn-lg type=button>REGRESAR</button>";
+agregarH2.innerHTML = "<h2>NO TIENES PRODUCTOS NI SERVICIOS EN TU CARRITO</h2>";
 
 //FUNCION DE INICIO DEL SIMULADOR
 function cliente() {
@@ -45,72 +61,46 @@ function cliente() {
         templateIndex.remove();
 		paginaIndex.remove();
 
-		main.appendChild(templateRegistroAdministrador);
 		nuevoUsuario();
     } else{
         const usuariosBajada = JSON.parse(localStorage.getItem("usuarios"));
-        
-        for (const usuario of usuariosBajada) {
-            if (usuario.nombre == nombre && usuario.password == pass) {
-                sessionStorage.setItem("UsuarioActual", JSON.stringify([]));
-                usuarioActual = [{nombre: usuario.nombre,password:usuario.password,telefono:usuario.telefono}];
-                let datosUsuario= JSON.stringify(usuarioActual);
+
+        for (const usu of usuariosBajada) {
+
+            if ((usu.nombre == nombre) && (usu.password == pass)) {
                 //Vacío el elemento en el sessionStorage
+                sessionStorage.setItem("usuarioActual", JSON.stringify([]));
+                usuarioActual = {nombre: usu.nombre,password:usu.password,telefono:usu.telefono};
+                let datosUsuario= JSON.stringify(usuarioActual);
+                //subo nueva sesion
                 sessionStorage.setItem("usuarioActual",datosUsuario);
+                templateIndex.remove();
+                paginaIndex.remove();
+
                 administracionServicios();
                     
             } else {
+                //Vacío el elemento en el sessionStorage
+                sessionStorage.setItem("usuarioActual", JSON.stringify([]));
+                usuarioActual = {nombre: usu.nombre,password:usu.password,telefono:usu.telefono};
+                let datosUsuario= JSON.stringify(usuarioActual);
+                //subo nueva sesion
+                sessionStorage.setItem("usuarioActual",datosUsuario);
                 //registro nuevo usuario
-                templateAdministrador.remove();
-                paginaAdministrador.remove();
+                templateIndex.remove();
+                paginaIndex.remove();
 
-                main.appendChild(templateRegistroAdministrador);
                 nuevoUsuario();
             }
         }
     }
 }
-//FUNCION DEL MENU DE USUARIO
-function administracionServicios() {
-	templateIndex.remove();
-	paginaIndex.remove();
-	main.appendChild(templateAdministrador);
-
-	botonera = templateAdministrador.querySelector(".botonera");
-	botonera.classList.add("d-flex");
-	botonera.classList.add("flex-column");
-	botonera.classList.add("flex-nowrap");
-	botonera.classList.add("justify-content-center");
-	botonera.classList.add("align-items-center");
-
-	agregar.addEventListener("click", () => {
-		templateAdministrador.remove();
-		paginaAdministrador.remove();
-
-		main.appendChild(templateRegistroAdministrador);
-		nuevoUsuario();
-	});
-
-	eliminar.addEventListener("click", () => {
-		templateAdministrador.remove();
-		paginaAdministrador.remove();
-
-		main.appendChild(templateEliminarUsuario);
-		eliminarAdministrador();
-	});
-
-	salir.addEventListener("click", () => {
-		templateAdministrador.remove();
-		paginaAdministrador.remove();
-
-		main.appendChild(templateIndex);
-	});
-}
 //FUNCION QUE AGREGA NUEVO USUARIO
 function nuevoUsuario() {
-	let formularioRegistroNuevoAdministrador = templateRegistroAdministrador.querySelector(".registroNuevoUsuario");
+    main.appendChild(templateRegistroUsuario);
+	let formularioRegistroNuevoUsuario = templateRegistroUsuario.querySelector(".registroNuevoUsuario");
 
-	formularioRegistroNuevoAdministrador.addEventListener("submit", (e) => {
+	formularioRegistroNuevoUsuario.addEventListener("submit", (e) => {
         e.preventDefault();
 
         const formData = new FormData(e.target);
@@ -130,8 +120,8 @@ function nuevoUsuario() {
             usuariosGuardados.push(usuarios);
             localStorage.setItem("usuarios", JSON.stringify(usuariosGuardados));
             e.target.reset();
-            templateRegistroAdministrador.remove();
-            paginaRegistroAdministrador.remove();
+            templateRegistroUsuario.remove();
+            paginaRegistroUsuario.remove();
             administracionServicios();
         } else{
             //bajo los usuarios guardados en el localstorage
@@ -154,37 +144,35 @@ function nuevoUsuario() {
                 usuariosGuardados.push(usuarios);
                 localStorage.setItem("usuarios", JSON.stringify(usuariosGuardados));
                 e.target.reset();
-                templateRegistroAdministrador.remove();
-                paginaRegistroAdministrador.remove();
+                templateRegistroUsuario.remove();
+                paginaRegistroUsuario.remove();
                 administracionServicios();
             //Si no, no agrega nada y sube directamente al localstorage
             } else {
-                sessionStorage.setItem("usuarioActual",JSON.stringify(usuarios));
+
                 localStorage.setItem("usuarios", JSON.stringify(usuariosGuardados));
                 e.target.reset();
-                templateRegistroAdministrador.remove();
-                paginaRegistroAdministrador.remove();
+                templateRegistroUsuario.remove();
+                paginaRegistroUsuario.remove();
                 administracionServicios();
             }
         }     
 	});
 
-	let siguienteUsuario = templateRegistroAdministrador.querySelector(".salir");
-	siguienteUsuario.addEventListener("click", () => {
-		templateRegistroAdministrador.remove();
-		paginaRegistroAdministrador.remove();
+	let salirMenuPrincipal = templateRegistroUsuario.querySelector(".salir");
+	salirMenuPrincipal.addEventListener("click", () => {
+		templateRegistroUsuario.remove();
+		paginaRegistroUsuario.remove();
 
-		main.appendChild(templateAdministrador);
-		administracionServicios();
+		location.reload(true);
 	});
 }
 //FUNCION DEL MENU DE ADMINISTRACION DE SERVICIOS
 function administracionServicios() {
-	templateIndex.remove();
-	paginaIndex.remove();
-	main.appendChild(templateAdministrador);
-
-	botonera = templateAdministrador.querySelector(".botonera");
+    
+	main.appendChild(templateAdministradorServicios);
+    
+	botonera = templateAdministradorServicios.querySelector(".botonera");
 	botonera.classList.add("d-flex");
 	botonera.classList.add("flex-column");
 	botonera.classList.add("flex-nowrap");
@@ -192,29 +180,33 @@ function administracionServicios() {
 	botonera.classList.add("align-items-center");
 
 	agregar.addEventListener("click", () => {
-		templateAdministrador.remove();
-		paginaAdministrador.remove();
+		templateAdministradorServicios.remove();
+		paginaAdministradorServicios.remove();
 
-		main.appendChild(templateServicios);
 		agendarServicio();
 	});
 
 	eliminar.addEventListener("click", () => {
-		templateAdministrador.remove();
-		paginaAdministrador.remove();
+		templateAdministradorServicios.remove();
+		paginaAdministradorServicios.remove();
 
 		main.appendChild(templateEliminarUsuario);
 		eliminarAgenda();
 	});
 
 	salir.addEventListener("click", () => {
-		templateAdministrador.remove();
-		paginaAdministrador.remove();
+		templateAdministradorServicios.remove();
+		paginaAdministradorServicios.remove();
         location.reload(true);
 		main.appendChild(templateIndex);
 	});
 }
 function agendarServicio(){
+    //AL ACCEDER DESDE NUEVO USUARIO, SE ELIMINA LA PAGINA
+    templateRegistroUsuario.remove();
+	paginaRegistroUsuario.remove();
+    //SE AGREGA LA PAGINA AGENDAR SERVICIOS
+    main.appendChild(templateServicios);
     //BAJO DEL LOCALSTORAGE LOS SERVICIOS
     let serviciosBajados = JSON.parse(localStorage.getItem("servicios"));
     //POR CADA SERVICIO MUESTRE UNA CARD CON LAS ESPESIFICACIONES
@@ -234,17 +226,116 @@ function agendarServicio(){
 //funcion que agrega a la agenda los servicios que quiere agendar
 function agregarServicios(e){
     usuarioActual = JSON.parse(sessionStorage.getItem("usuarioActual"));
-    agendaCliente = servicios.find( serv => serv.id == e.target.id);
-    const cliente = {...usuarioActual};
-    let agendaServicios = [...cliente,...agendaCliente];
+    serviciosAlmacenados = JSON.parse(localStorage.getItem("servicios"));
+    let agendaCliente = serviciosAlmacenados.find( serv => serv.id == e.target.id);
+    //SUMAMOS LOS DOS OBJETOS Y LO AGREGAMOS AL ARRAY AGENDASERVICIOS
+    let agendaObj = Object.assign({},usuarioActual,agendaCliente);
+    agendaServicios.push(agendaObj);
+    //si no esta el localstorage esta el elemento agendaservicios, almacene directamente el servicio 
     if(!localStorage.getItem("agendaServicios")){
-        
         let agendaClienteJson = JSON.stringify(agendaServicios);
         localStorage.setItem("agendaServicios",agendaClienteJson);
     }else{
-        agendaServiciosBajados = JSON.parse(localStorage.getItem("agendaServicios"));
-        agendaServiciosBajados.push(agendaServicios);
-        agendaClienteJson = JSON.stringify(agendaServicios);
+        //si ya hay algun servicio entonces primero baje del localstorage la agendaservicos y luego sumele lo nuevo y guarde nuevamente en el localstorage 
+        let agendaServiciosBajados = JSON.parse(localStorage.getItem("agendaServicios"));
+        let agenda = [...agendaServiciosBajados,...agendaServicios];
+        agendaClienteJson = JSON.stringify(agenda);
         localStorage.setItem("agendaServicios",agendaClienteJson);
     }
+
+}
+//FUNCION QUE MUESTRA EL CARRITO DE SERVICIOS AGENDADOS POR USUARIO
+function verCarrito(e){
+    //SI SE ACCEDE DESDE LA PAGINA INDEX, SE ELIMINA ESA PAGINA
+    templateIndex.remove();
+    paginaIndex.remove();
+    //SI SE ACCEDE DESDE NUEVO USUARIO, SE ELIMINA ESA PAGINA
+    templateRegistroUsuario.remove();
+    paginaRegistroUsuario.remove();
+    //SI SE ACCEDE DESDE ADMINISTRACION SERVICIO
+    templateAdministradorServicios.remove();
+	paginaAdministradorServicios.remove();
+    //SI SE ACCEDE DESDE AGENDAR SERVICIOS, SE ELIMINA ESA PAGINA
+    templateServicios.remove();
+    paginaServicios.remove();
+    //SE AGREGA AL MAIN LA PAGINA CARRITO
+    main.appendChild(templateCarrito);
+    
+    if(!localStorage.getItem("agendaServicios")){
+        templateCarrito.appendChild(agregarH2);
+        templateCarrito.appendChild(regresoBtn);
+        regresoH2.addEventListener("click",regresoIndex(regreso,agregar,carritoCompra));
+    }else{
+        agendaServiciosGuardada = (JSON.parse(localStorage.getItem("agendaServicios")));
+        
+        if(agendaServiciosGuardada.length !== 0){
+            usuarioActual = (JSON.parse(sessionStorage.getItem("usuarioActual")));
+            let totalCompra = 0;
+            for (let [posicion,element] of agendaServiciosGuardada.entries()) {
+                while((element.nombre === usuarioActual.nombre) && (element.password === usuarioActual.password) && (element.telefono === usuarioActual.telefono)){
+                    let cardCarritoInnerIndexClonada = cardCarritoInnerIndex.cloneNode(true);
+                    cardCarritoInnerIndexClonada.classList.add(`${posicion}`);
+                    let imgCardCarritoInnerIndexClonada = cardCarritoInnerIndexClonada.querySelector("img");
+                    imgCardCarritoInnerIndexClonada.setAttribute("src",`${element.img}`);
+                    let parrfCardCarritoInnerIndexClonada = cardCarritoInnerIndexClonada.querySelector("p");
+                    parrfCardCarritoInnerIndexClonada.textContent = `Horas de Tratamiento: ${element.horaTrata}\tPrecio: ${element.precio}$`;
+                    let labelCardCarritoInnerIndexClonada = cardCarritoInnerIndexClonada.querySelector("label");
+                    labelCardCarritoInnerIndexClonada.textContent = `${element.titulo}`;
+                    let inputCardCarritoInnerIndexClonada = cardCarritoInnerIndexClonada.querySelector("input");
+                    inputCardCarritoInnerIndexClonada.setAttribute("max",`${element.cant}`);
+                    inputCardCarritoInnerIndexClonada.setAttribute("disabled",true);
+                    totalCompra = totalCompra + (element.precio * 1);
+                    let buttonCardCarritoInnerIndexClonada = cardCarritoInnerIndexClonada.querySelector("button");
+                    buttonCardCarritoInnerIndexClonada.addEventListener("click", eliminarServicio);
+                    buttonCardCarritoInnerIndexClonada.setAttribute("id",`${element.id}`);
+                    carritoInner.appendChild(cardCarritoInnerIndexClonada);
+                    break;
+                }
+            };
+            let spanCarritoInnerIndex = carritoInner.querySelector("span");
+            spanCarritoInnerIndex.textContent = `TOTAL DE COMPRA: ${totalCompra}`;
+            while (totalCompra == 0) {
+                templateCarrito.appendChild(agregarH2);
+                templateCarrito.appendChild(regresoBtn);
+                regresoBtn.addEventListener("click",regresoIndex);
+            }
+    
+        }else{
+            templateCarrito.appendChild(agregarH2);
+            templateCarrito.appendChild(regresoBtn);
+            regresoBtn.addEventListener("click",regresoIndex);
+        }
+    }
+
+}
+//FUNCION QUE ELIMINA LOS SERVICIOS AGENDADOS EN EL CARRITO
+function eliminarServicio(e){
+    agendaServiciosGuardada = (JSON.parse(localStorage.getItem("agendaServicios")));
+    usuarioActual = (JSON.parse(sessionStorage.getItem("usuarioActual")));
+    //recorremos la agendaguardada en el localstorage y remplazamos en la posicion del servicio a eliminar el objeto servicio eliminado
+    for (let [index,val] of agendaServiciosGuardada.entries()) {
+        //buscar los elementos por usuarioactual en agenda
+        while((val.nombre == usuarioActual.nombre) && (val.password == usuarioActual.password) && (val.telefono == usuarioActual.telefono) && (val.id == e.target.id)){
+            let servicioEliminado = {titulo:"SERVICIO ELIMINADO POR EL USUARIO"};
+            agendaServiciosGuardada.splice(index,1,servicioEliminado)
+            break;
+        }
+    }
+    //subir a la agenda los servicios que quedan
+    localStorage.setItem("agendaServicios",JSON.stringify(agendaServiciosGuardada));
+    //remplazamos el nodo eliminado por el texto servicio eliminado
+    for (let i = 0; i < carritoInner.childNodes.length; i++){
+        while(carritoInner.childNodes[i] === e.target.offsetParent){
+            carritoInner.childNodes[i].innerText = "SERVICIO ELIMINADO";
+            break;
+        }
+    }
+    verCarrito();
+}
+//FUNCION DE REGRESO AL INDEX
+function regresoIndex(){
+    regresoBtn.remove();
+    agregarH2.remove();
+    carritoCompra = [];
+    location.reload(true);
 }

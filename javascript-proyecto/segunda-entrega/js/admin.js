@@ -123,7 +123,6 @@ function nuevoAdministrador() {
         } else{
 
             AdministradoresGuardados = JSON.parse(localStorage.getItem("administradores"));
-            console.log(AdministradoresGuardados);
             //Vacío el elemento en el localStorage
             localStorage.setItem("administradores", JSON.stringify([]));
             //Comienza el bucle y evalúo si el elemento existe ya en localStorage
@@ -155,8 +154,8 @@ function nuevoAdministrador() {
         }     
 	});
 
-	let siguienteUsuario = templateRegistroAdministrador.querySelector(".salir");
-	siguienteUsuario.addEventListener("click", () => {
+	let salir = templateRegistroAdministrador.querySelector(".salir");
+	salir.addEventListener("click", () => {
 		templateRegistroAdministrador.remove();
 		paginaRegistroAdministrador.remove();
 
@@ -179,7 +178,7 @@ function eliminarAdministrador() {
             tr.setAttribute("id",`${index}`)
             let tds = [index,val.administrador, val.password];
             
-            for(var i = 0; i < tds.length; ++i) {
+            for(let i = 0; i < tds.length; ++i) {
                 
 
                 let td = document.createElement('td');
