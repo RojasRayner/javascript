@@ -71,6 +71,10 @@ function verCarrito(e){
     templateIndex.remove();
     main.appendChild(templateCarrito);
 
+    while (carritoInner.firstChild) {
+        carritoInner.removeChild(carritoInner.firstChild);
+    }
+
     let totalCompra = 0;
     if(!localStorage.getItem("carritoCompra")){
         templateCarrito.appendChild(agregar);
@@ -152,6 +156,7 @@ function eliminarProducto(e){
         }
     }
     localStorage.setItem("carritoCompra",JSON.stringify(carritoCompraGuardada));
+
     verCarrito();
 }
 //MOSTRAR POR CADA PRODUCTO UNA CARD CON SUS ESPESIFICACIONES
