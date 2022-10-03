@@ -34,6 +34,7 @@ cardServiciosInnerIndex.remove();
 //CAPTURA DE ICONO QUE MUESTRA UN EVENTO QUE LLEVA CARRITO DE COMPRA
 let header = document.querySelector("header");
 let imgCarrito = header.querySelector("i");
+imgCarrito.classList.add("imgCarrito");
 imgCarrito.addEventListener("click",verCarrito);
 //CAPTURA DE LOS ELEMENTOS Y CARD DE LA AGENDA ASIGNADA POR USUARIO
 let paginaCarrito = document.querySelector("#paginaCarrito");
@@ -164,7 +165,7 @@ function nuevoUsuario() {
 		templateRegistroUsuario.remove();
 		paginaRegistroUsuario.remove();
 
-		location.reload(true);
+		//location.reload(true);
 	});
 }
 //FUNCION DEL MENU DE ADMINISTRACION DE SERVICIOS

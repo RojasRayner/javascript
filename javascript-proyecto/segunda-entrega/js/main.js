@@ -19,7 +19,7 @@ const productos =[{titulo:"AGUA MICELAR",id:1,precio:300,tipoDePiel:"NORMAL",can
 localStorage.setItem("servicios",JSON.stringify(servicios));
 localStorage.setItem("productos",JSON.stringify(productos))
 
-const carritoCompra = [];
+const carritoCompra = (JSON.parse(localStorage.getItem("carritoCompra"))) || [];
 
 let main = document.querySelector("main");
 
@@ -40,6 +40,7 @@ main.appendChild(templateIndex);
 //CAPTURA DEL ICONO CARRITO Y ASIGNACION DE EVENTO
 let header = document.querySelector("header");
 let imgCarrito = header.querySelector("i");
+imgCarrito.classList.add("imgCarrito");
 imgCarrito.addEventListener("click",verCarrito);
 //ELEMENTOS QUE SE MUESTRAN SI EL CARRITO ESTA VACIO
 let agregar = document.createElement("h2");
@@ -52,12 +53,14 @@ let templateCarrito = paginaCarrito.content.querySelector(".wrapper");
 let carritoInner = templateCarrito.querySelector(".carrito");
 let cardCarritoInnerIndex = carritoInner.querySelector(".cardCarrito");
 cardCarritoInnerIndex.remove();
+
 carritoInner.style.background = "none";
 //CAPTURA DE LA CARD QUE MUESTRA LOS PRODUCTOS
 let productosInner = templateIndex.querySelector(".productos");
 productosInner.style.background = "none";
 let cardProductosInnerIndex = productosInner.querySelector(".cardProductos");
 cardProductosInnerIndex.remove();
+
 //CAPTURA DE LA CARD QUE MUESTRA LOS SERVICIOS
 let serviciosInner = templateIndex.querySelector(".servicios");
 serviciosInner.style.background = "none";
@@ -71,17 +74,13 @@ function verCarrito(e){
     templateIndex.remove();
     main.appendChild(templateCarrito);
 
-    while (carritoInner.firstChild) {
-        carritoInner.removeChild(carritoInner.firstChild);
-    }
-
     let totalCompra = 0;
     if(!localStorage.getItem("carritoCompra")){
         templateCarrito.appendChild(agregar);
         templateCarrito.appendChild(regreso);
         regreso.addEventListener("click",regresoIndex(regreso,agregar,carritoCompra));
     } else{
-        carritoCompraGuardada = JSON.parse(localStorage.getItem("carritoCompra"));
+        carritoCompraGuardada = carritoCompra;
         if(carritoCompraGuardada.length !== 0){
             carritoCompraGuardada.forEach(element => {
                 let cardCarritoInnerIndexClonada = cardCarritoInnerIndex.cloneNode(true);
@@ -119,18 +118,10 @@ function regresoIndex(regreso,agregar,carritoCompra){
 }
 //funcion que elimina productos del carrito de compra
 function eliminarProducto(e){
-    //eliminamos del localstorage el producto
-    carritoCompraGuardada = JSON.parse(localStorage.getItem("carritoCompra"));
-    localStorage.setItem("carritoCompra",JSON.stringify([]));
-    //let compraProductoEliminado = {titulo:"COMPRA ELIMINADA",precio:0};
+    carritoCompraGuardada = carritoCompra;
     for (let [index,valor] of carritoCompraGuardada.entries()) {
-        while ((valor.id == e.target.id)) {
-            carritoCompraGuardada.splice(index,1);
-            break;
-        }
+        if(valor.id == e.target.id) carritoCompraGuardada.splice(index,1);
     }
-    
-    //eliminamos del dom el producto
     let productoCarritoEliminado = document.createElement("div");
     productoCarritoEliminado.innerHTML = `
                     <div class="card cardCarrito d-flex flex-row justify-content-around align-items-center">
@@ -156,11 +147,10 @@ function eliminarProducto(e){
         }
     }
     localStorage.setItem("carritoCompra",JSON.stringify(carritoCompraGuardada));
-
-    verCarrito();
 }
 //MOSTRAR POR CADA PRODUCTO UNA CARD CON SUS ESPESIFICACIONES
-let productosGuardados = JSON.parse(localStorage.getItem("productos"));
+let productosGuardados = productos;
+console.log(productosGuardados);
 productosGuardados.forEach(element => {
     let cardProductosInnerIndexClonada = cardProductosInnerIndex.cloneNode(true);
     let parrfCardProductosInnerIndexClonada = cardProductosInnerIndexClonada.querySelector("p");
@@ -185,16 +175,14 @@ serviciosGuardados.forEach(element => {
 });
 //funcion que agrega al carrito los productos que quiere comprar
 function agregarProductos(e){
-    let posibleCompra = productosGuardados.find(prod => prod.id == e.target.id);
-    if(!localStorage.getItem("carritoCompra")){
+    let posibleCompra = productos.find(prod => prod.id == e.target.id);
+    if(!JSON.parse(localStorage.getItem("carritoCompra"))){
         carritoCompra.push(posibleCompra);
         localStorage.setItem("carritoCompra",JSON.stringify(carritoCompra));
     }else{
-        let posibleCompraGuardada = JSON.parse(localStorage.getItem("carritoCompra"));
-        localStorage.setItem("carritoCompra",JSON.stringify([]));
+        let posibleCompraGuardada = carritoCompra;
         posibleCompraGuardada.push(posibleCompra);
         localStorage.setItem("carritoCompra",JSON.stringify(posibleCompraGuardada));
     }
-    
 }
 

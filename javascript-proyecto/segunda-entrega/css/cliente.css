@@ -89,6 +89,9 @@ a:hover {
 	width: 100%;
 	height: 20px;
 }
+.imgCarrito{
+	cursor: pointer;
+}
 
 form {
 	width: 50%;
