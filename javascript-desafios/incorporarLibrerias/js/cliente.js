@@ -2,6 +2,7 @@
 const servicios = [{titulo:"Limieza Facial",des:"Procedimiento que elimina todas las impurezas que se encuentran en la piel generadas por el mismo cuerpo y por el ambiente.",precio:300,horaTrata:1,img:"../images/productos/limpiezaFacial.png",id:1},{titulo:"Maniqura",des:" Tratamiento de belleza cosmético para las uñas y manos",precio:600,horaTrata:2,img:"../images/productos/maniqura.png",id:2},{titulo:"Pediqura",des:"Tratamiento de belleza cosmético para las uñas y pies.",precio:600,horaTrata:2,img:"../images/productos/pediqura.png",id:3}];
 let serviciosJson = JSON.stringify(servicios);
 localStorage.setItem("servicios", serviciosJson);
+let usuarioActual = (JSON.parse(sessionStorage.getItem("usuarioActual"))) || [];
 //VARIABLES DE GUARDADOS DE DATOS
 const horaDeTrabajo = [];
 const agendaServicios = [];
@@ -14,6 +15,8 @@ let templateIndex = paginaIndex.content.querySelector(".wrapper");
 main.appendChild(templateIndex);
 let formularioUsuario = templateIndex.querySelector(".entrada");
 formularioUsuario.addEventListener("submit", cliente);
+let formularioNuevoUsuario = templateIndex.querySelector(".botonNuevoUsuario");
+formularioNuevoUsuario.addEventListener("submit",nuevoUsuario);
 //CAPTURA DEL TEMPLATE DEL MENU DE USUARIO Y SUS BOTONES
 let paginaAdministradorServicios = document.querySelector("#paginaAdministradorServicios");
 let templateAdministradorServicios = paginaAdministradorServicios.content.querySelector(".wrapper");
@@ -43,6 +46,8 @@ let carritoInner = templateCarrito.querySelector(".carrito");
 let cardCarritoInnerIndex = carritoInner.querySelector(".cardCarrito");
 cardCarritoInnerIndex.remove();
 carritoInner.style.background = "none";
+let carritoRegresar = templateCarrito.querySelector(".carritoRegresar");
+let carritoComprados = templateCarrito.querySelector(".carritoComprar");
 //ELEMENTOS QUE SE MUESTRAN SI EL CARRITO ESTA VACIO
 let agregarH2 = document.createElement("h2");
 let regresoBtn = document.createElement("button");
@@ -98,6 +103,8 @@ function cliente() {
 }
 //FUNCION QUE AGREGA NUEVO USUARIO
 function nuevoUsuario() {
+    templateIndex.remove();
+    paginaIndex.remove();
     main.appendChild(templateRegistroUsuario);
 	let formularioRegistroNuevoUsuario = templateRegistroUsuario.querySelector(".registroNuevoUsuario");
 
@@ -301,11 +308,6 @@ function verCarrito(e){
             };
             let spanCarritoInnerIndex = carritoInner.querySelector("span");
             spanCarritoInnerIndex.textContent = `TOTAL DE COMPRA: ${totalCompra}`;
-            while (totalCompra == 0) {
-                templateCarrito.appendChild(agregarH2);
-                templateCarrito.appendChild(regresoBtn);
-                regresoBtn.addEventListener("click",regresoIndex);
-            }
     
         }else{
             templateCarrito.appendChild(agregarH2);
@@ -313,7 +315,8 @@ function verCarrito(e){
             regresoBtn.addEventListener("click",regresoIndex);
         }
     }
-
+    carritoComprados.addEventListener("click", carritoCompraProductos);
+    carritoRegresar.addEventListener("click", regresoIndex);
 }
 //FUNCION QUE ELIMINA LOS SERVICIOS AGENDADOS EN EL CARRITO
 function eliminarServicio(e){
@@ -341,6 +344,51 @@ function eliminarServicio(e){
 function regresoIndex(){
     regresoBtn.remove();
     agregarH2.remove();
-    carritoCompra = [];
     location.reload(true);
+}
+//funcion que ejecuta la compra de los productos en carrito
+function carritoCompraProductos(e) {
+    (async () => {
+        const steps = ['1', '2']
+        const Queue = Swal.mixin({
+            progressSteps: steps,
+            confirmButtonText: 'Next >',
+            // optional classes to avoid backdrop blinking between steps
+            showClass: { backdrop: 'swal2-noanimation' },
+            hideClass: { backdrop: 'swal2-noanimation' }
+        })
+
+        await Queue.fire({
+            title: 'Usuario',
+            text:`Nombre: ${usuarioActual.nombre}\nTelefono: ${usuarioActual.telefono}`,
+            currentProgressStep: 0,
+            // optional class to show fade-in backdrop animation which was disabled in Queue mixin
+            showClass: { backdrop: 'swal2-noanimation' },
+        })
+
+        await Queue.fire({
+            title: 'Compra asegurada',
+            showConfirmButton: false,
+            timer: 1500,
+            icon: 'success',
+            currentProgressStep: 1,
+            confirmButtonText: 'OK',
+            // optional class to show fade-out backdrop animation which was disabled in Queue mixin
+            showClass: { backdrop: 'swal2-noanimation' },
+        })
+        
+        if(opcion){
+            let agendaServiciosFinal = JSON.parse(localStorage.getItem("agendaServicios")) || [];
+            console.log(agendaServiciosFinal)
+            for (const iterator of agendaServiciosFinal) {
+                let agendaObj = Object.assign({},usuarioActual,iterator);
+                console.log(agendaObj)
+                agendaServiciosFinal.push(agendaObj);
+            }
+            localStorage.setItem("comprasServicioRealizadas",JSON.stringify(agendaServiciosFinal));
+            localStorage.setItem("agendaServicios",JSON.stringify([]));
+            //location.reload(true);
+        }
+
+    })()
 }

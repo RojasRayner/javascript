@@ -53,7 +53,8 @@ let templateCarrito = paginaCarrito.content.querySelector(".wrapper");
 let carritoInner = templateCarrito.querySelector(".carrito");
 let cardCarritoInnerIndex = carritoInner.querySelector(".cardCarrito");
 cardCarritoInnerIndex.remove();
-
+let carritoRegresar = templateCarrito.querySelector(".carritoRegresar");
+let carritoComprados = templateCarrito.querySelector(".carritoComprar");
 carritoInner.style.background = "none";
 //CAPTURA DE LA CARD QUE MUESTRA LOS PRODUCTOS
 let productosInner = templateIndex.querySelector(".productos");
@@ -73,15 +74,12 @@ function verCarrito(e){
     regreso.remove();
     templateIndex.remove();
     main.appendChild(templateCarrito);
-
+    let carritoCompraGuardada = carritoCompra;
     let totalCompra = 0;
-    if(!localStorage.getItem("carritoCompra")){
+    if((!(carritoCompraGuardada)) || (carritoCompraGuardada.length == 0)){
         templateCarrito.appendChild(agregar);
-        templateCarrito.appendChild(regreso);
-        regreso.addEventListener("click",regresoIndex(regreso,agregar,carritoCompra));
-    } else{
-        carritoCompraGuardada = carritoCompra;
-        if(carritoCompraGuardada.length !== 0){
+        regreso.addEventListener("click",regresoIndex);
+    } else if(carritoCompraGuardada.length !== 0){
             carritoCompraGuardada.forEach(element => {
                 let cardCarritoInnerIndexClonada = cardCarritoInnerIndex.cloneNode(true);
                 let imgCardCarritoInnerIndexClonada = cardCarritoInnerIndexClonada.querySelector("img");
@@ -101,19 +99,15 @@ function verCarrito(e){
             });
             let spanCarritoInnerIndex = carritoInner.querySelector("span");
             spanCarritoInnerIndex.textContent = `TOTAL DE COMPRA: ${totalCompra}`;
-    
-        }else{
-            templateCarrito.appendChild(agregar);
-            templateCarrito.appendChild(regreso);
-            regreso.addEventListener("click",regresoIndex(regreso,agregar,carritoCompra));
-        }
     }
+    carritoComprados.addEventListener("click", carritoCompraProductos);
+    carritoRegresar.addEventListener("click", regresoIndex)
+    
 }
 //FUNCION DE REGRESO AL INDEX
-function regresoIndex(regreso,agregar,carritoCompra){
+function regresoIndex(){
     regreso.remove();
     agregar.remove();
-    carritoCompra = [];
     location.reload(true);
 }
 //funcion que elimina productos del carrito de compra
@@ -150,7 +144,7 @@ function eliminarProducto(e){
 }
 //MOSTRAR POR CADA PRODUCTO UNA CARD CON SUS ESPESIFICACIONES
 let productosGuardados = productos;
-console.log(productosGuardados);
+
 productosGuardados.forEach(element => {
     let cardProductosInnerIndexClonada = cardProductosInnerIndex.cloneNode(true);
     let parrfCardProductosInnerIndexClonada = cardProductosInnerIndexClonada.querySelector("p");
@@ -196,4 +190,71 @@ function alertProductosCarrito(){
         showConfirmButton: false,
         timer: 1500
     })
+}
+//funcion que ejecuta la compra de los productos en carrito
+function carritoCompraProductos(e) {
+    (async () => {
+        const steps = ['1', '2', '3']
+        const Queue = Swal.mixin({
+            progressSteps: steps,
+            confirmButtonText: 'Next >',
+            // optional classes to avoid backdrop blinking between steps
+            showClass: { backdrop: 'swal2-noanimation' },
+            hideClass: { backdrop: 'swal2-noanimation' }
+        })
+
+        const { value: nombreComprador } = await Queue.fire({
+            title: 'Ingresa tu nombre Completo',
+            input: 'text',
+            customClass: {
+                validationMessage: 'my-validation-message'
+            },
+            preConfirm: (value) => {
+                if (!value) {
+                    Swal.showValidationMessage('Tu Nombre es Requerido')
+                }
+            },
+            currentProgressStep: 0,
+            // optional class to show fade-in backdrop animation which was disabled in Queue mixin
+            showClass: { backdrop: 'swal2-noanimation' },
+        })
+        const { value: telComprador } = await Queue.fire({
+            title: 'Ingresa tu numero de telefono',
+            input: 'tel',
+            customClass: {
+                validationMessage: 'my-validation-message'
+            },
+            preConfirm: (value) => {
+                if (!value) {
+                    Swal.showValidationMessage('Tu Numero de telefono es Requerido')
+                }
+            },
+            currentProgressStep: 1
+        })
+
+        await Queue.fire({
+            title: 'Compra asegurada',
+            text: `Comprador: ${nombreComprador}\nTelefono: ${telComprador}`,
+            showConfirmButton: false,
+            timer: 4000,
+            icon: 'success',
+            currentProgressStep: 2,
+            confirmButtonText: 'OK',
+            // optional class to show fade-out backdrop animation which was disabled in Queue mixin
+            showClass: { backdrop: 'swal2-noanimation' },
+        })
+
+        if(telComprador){
+            const comprasRealizadas = JSON.parse(localStorage.getItem("comprasRealizadas")) || [];
+            const Comprador = {usuario:nombreComprador,telefono:telComprador};
+            for (const iterator of carritoCompra) {
+                let agendaObj = Object.assign({},Comprador,iterator);
+                comprasRealizadas.push(agendaObj);
+            }
+            localStorage.setItem("comprasRealizadas",JSON.stringify(comprasRealizadas));
+            localStorage.setItem("carritoCompra",JSON.stringify([]));
+            location.reload(true);
+        }
+
+    })()
 }
