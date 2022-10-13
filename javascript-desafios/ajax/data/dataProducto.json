@@ -1,0 +1,41 @@
+[
+    {
+        "titulo":"AGUA MICELAR",
+        "id":1,
+        "precio":300,
+        "tipoDePiel":"NORMAL",
+        "cant":10,
+        "img":"./images/productos/aguaMicelar.png"
+},
+    {
+        "titulo":"JABON FACIAL",
+        "id":2,
+        "precio":120,
+        "tipoDePiel":"NORMAL",
+        "cant":10,
+        "img":"./images/productos/jabonFacial.png"
+},
+    {
+        "titulo":"ESPUMA DESMAQUILLANTE",
+        "id":3,
+        "precio":450,
+        "tipoDePiel":"MIXTA",
+        "cant":10,
+        "img":"./images/productos/espumaDesmaquillante.png"
+    },{
+        "titulo":"TONICO HIDRATANTE",
+        "id":4,
+        "precio":210,
+        "tipoDePiel":"SECA",
+        "cant":10,
+        "img":"./images/productos/tonicoHidratante.png"
+},
+    {
+        "titulo":"TONICO REVITALIZANTE",
+        "id":5,
+        "precio":210,
+        "tipoDePiel":"GRASA",
+        "cant":10,
+        "img":"./images/productos/tonicoRevitalizante.png"
+}
+]
