@@ -43,10 +43,10 @@ imgCarritoServicios.style.display = "none";
 enlaceServicios.addEventListener("click",agendarServicio);
 
 //ELEMENTOS QUE SE MUESTRAN SI EL CARRITO ESTA VACIO
-let agregar = document.createElement("h2");
-let regreso = document.createElement("button");
-regreso.innerHTML = "<button class=btn btn-primary entrar mb-1 btn-lg type=button>REGRESAR</button>";
-agregar.innerHTML = "<h2>NO TIENES PRODUCTOS NI SERVICIOS EN TU CARRITO</h2>";
+let agregarInfoProductos = document.createElement("h2");
+agregarInfoProductos.innerHTML = "<h2>NO TIENES PRODUCTOS EN TU CARRITO</h2>";
+let agregarInfoServicios = document.createElement("h2");
+agregarInfoServicios.innerHTML = "<h2>NO TIENES SERVICIOS EN TU CARRITO</h2>";
 
 //CAPTURA DE ICONO QUE MUESTRA UN EVENTO QUE LLEVA CARRITO DE COMPRA DE PRODUCTOS
 let paginaCarritoProductos = document.querySelector("#paginaCarritoProductos");
@@ -85,15 +85,17 @@ cardServiciosInnerIndex.remove();
 
 //FUNCION QUE MUESTRA EL CARRITO DE PRODUCTOS
 function verCarritoProductos(e){
-    agregar.remove();
-    regreso.remove();
+    agregarInfoProductos.remove();
     templateIndex.remove();
+    enlaceServicios.style.display = "none";
     main.appendChild(templateCarritoProductos);
     let carritoCompraGuardada = carritoCompra;
     let totalCompra = 0;
     if((!(carritoCompraGuardada)) || (carritoCompraGuardada.length == 0)){
-        templateCarritoProductos.appendChild(agregar);
+        carritoProductosComprados.style.display = "none";
+        templateCarritoProductos.appendChild(agregarInfoProductos);
     } else if(carritoCompraGuardada.length !== 0){
+            carritoProductosComprados.style.display = "block";
             carritoCompraGuardada.forEach(element => {
                 let cardCarritoProductosInnerIndexClonada = cardCarritoProductosInnerIndex.cloneNode(true);
                 let imgCardCarritoProductosInnerIndexClonada = cardCarritoProductosInnerIndexClonada.querySelector("img");
@@ -120,9 +122,9 @@ function verCarritoProductos(e){
 }
 //FUNCION DE REGRESO AL INDEX
 function regresoIndex(){
-    regreso.remove();
-    agregar.remove();
-    location.reload(true);
+    templateCarritoProductos.remove();
+    enlaceServicios.style.display = "block";
+    main.appendChild(templateIndex);
 }
 //funcion que elimina productos del carrito de compra
 function eliminarProducto(e){
@@ -148,9 +150,9 @@ function eliminarProducto(e){
                         </div>
                     </div>`;
 
-    for (let index = 0; index < carritoInner.childNodes.length; index++) {
-        while(carritoInner.childNodes[index] === e.target.offsetParent){
-            carritoInner.replaceChild(productoCarritoEliminado,carritoInner.childNodes[index]);
+    for (let index = 0; index < carritoInnerProductos.childNodes.length; index++) {
+        while(carritoInnerProductos.childNodes[index] === e.target.offsetParent){
+            carritoInnerProductos.replaceChild(productoCarritoEliminado,carritoInnerProductos.childNodes[index]);
             break;
         }
     }
@@ -349,7 +351,7 @@ function agregarServicios(e){
     let agendaCliente = serviciosAlmacenados.find( serv => serv.id == e.target.id);
     let agendaObj = Object.assign({},usuarioActual,agendaCliente);
     agendaServicios.push(agendaObj);
-    if(localStorage.getItem("agendaServicios") || []){
+    if(!localStorage.getItem("agendaServicios") || []){
         localStorage.setItem("agendaServicios",JSON.stringify(agendaServicios));
         alertServiciosCarrito();
     }else{
@@ -371,15 +373,18 @@ function alertServiciosCarrito(){
 }
 //FUNCION QUE MUESTRA EL CARRITO DE SERVICIOS AGENDADOS POR USUARIO
 function verCarritoServicios(e){
+    agregarInfoServicios.remove();
     templateServicios.remove();
     paginaServicios.remove();
-    //SE AGREGA AL MAIN LA PAGINA CARRITO
+    enlaceProductos.style.display = "none";
     main.appendChild(templateCarritoServicios);
     agendaServiciosGuardada = (JSON.parse(localStorage.getItem("agendaServicios")));
     
     if(!localStorage.getItem("agendaServicios")){
-        templateCarritoServicios.appendChild(agregar);
+        carritoServiciosComprados.style.display = "none";
+        templateCarritoServicios.appendChild(agregarInfoServicios);
     }else if(agendaServiciosGuardada.length !== 0){
+            carritoServiciosComprados.style.display = "block";
             usuarioActual = (JSON.parse(sessionStorage.getItem("usuario")));
             let totalCompra = 0;
             for (let [posicion,element] of agendaServiciosGuardada.entries()) {
@@ -415,12 +420,14 @@ function volverPaginaProductos(){
     imgCarritoProductos.style.display = "block";
     imgCarritoServicios.style.display = "none";
     enlaceProductos.style.display = "none";
+    templateCarritoServicios.remove();
     templateServicios.remove();
     main.appendChild(templateIndex);
 }
 //FUNCION DEL EVENTO QUE PERMITE REGRESAR DE LA PAGINA CARRITO SERVICIOS A LA PAGINA DE AGENDA SERVICIOS
 function volverPaginaServicios(){
     templateCarritoServicios.remove();
+    enlaceProductos.style.display = "block";
     main.appendChild(templateServicios);
 }
 //FUNCION QUE ELIMINA LOS SERVICIOS AGENDADOS EN EL CARRITO
@@ -431,8 +438,7 @@ function eliminarServicio(e){
     for (let [index,val] of agendaServiciosGuardada.entries()) {
         //buscar los elementos por usuarioactual en agenda
         if((val.nombre == usuarioActual.nombre) && (val.telefono == usuarioActual.telefono) && (val.id == e.target.id)){
-            let servicioEliminado = {titulo:"SERVICIO ELIMINADO POR EL USUARIO"};
-            agendaServiciosGuardada.splice(index,1,servicioEliminado)
+            agendaServiciosGuardada.splice(index,1)
         }
     }
     //subir a la agenda los servicios que quedan
@@ -456,5 +462,5 @@ function carritoAgendarServicios(){
     }
     localStorage.setItem("comprasServicioRealizadas",JSON.stringify(serviciosAgendadosFinal));
     localStorage.setItem("agendaServicios",JSON.stringify([]));
-    volverPaginaServicios();
+    volverPaginaProductos();
 }
