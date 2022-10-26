@@ -1,0 +1,26 @@
+[
+    {
+        "titulo":"Limieza Facial",
+        "des":"Procedimiento que elimina todas las impurezas que se encuentran en la piel generadas por el mismo cuerpo y por el ambiente.",
+        "precio":300,
+        "horaTrata":1,
+        "img":"./images/productos/limpiezaFacial.png",
+        "id":1
+    },
+    {
+        "titulo":"Maniqura",
+        "des":" Tratamiento de belleza cosmético para las uñas y manos",
+        "precio":600,
+        "horaTrata":2,
+        "img":"./images/productos/maniqura.png",
+        "id":2
+    },
+    {
+        "titulo":"Pediqura",
+        "des":"Tratamiento de belleza cosmético para las uñas y pies.",
+        "precio":600,
+        "horaTrata":2,
+        "img":"./images/productos/pediqura.png",
+        "id":3
+    }
+]
